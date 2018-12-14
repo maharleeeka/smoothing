@@ -1,4 +1,4 @@
-import re
+import re, csv
 from functools import reduce
 from collections import Counter, defaultdict
 from itertools import islice
@@ -9,7 +9,7 @@ def main():
 
 	choice = input("\nChoose: ")
 
-	path = 'test_data.txt'
+	path = 'final.txt'
 
 	test_data_file = open(path, 'r')
 	word_array = test_data_file.readlines();
@@ -17,6 +17,8 @@ def main():
 	i = 0;
 	new_dictionary = Counter(zip('', islice('', 1, None)))
 	word_frequency = Counter('');
+
+	print ("\nprocessing your test data input...")
 
 	while i < len(word_array):
 		words = word_array[i]
@@ -39,7 +41,7 @@ def main():
 	else:
 		quit()
 
-	print ("P(", user_input, ") = ", result)
+	print ("\n\nP(", user_input, ") = ", result)
 
 
 def laplace(new_dictionary, word_frequency, user_input, user_input_dictionary):
@@ -72,6 +74,8 @@ def laplace(new_dictionary, word_frequency, user_input, user_input_dictionary):
 
 		probability = probability * prob_each
 		j = j + 1
+
+	write_outputs(new_dictionary, user_input_dictionary)
 
 	return probability
 
@@ -142,6 +146,9 @@ def good_turing(new_dictionary, word_frequency, user_input_dictionary):
 		i += 1
 	
 	result = reduce(lambda x, y: x*y, estimates)
+
+	write_outputs(new_dictionary, user_input_dictionary)
+
 	return result
 
 
@@ -196,12 +203,23 @@ def getSummation(nc_array):
 	return summation
 
 def remove_duplicates(values):
-    output = []
-    seen = set()
-    for value in values:
-        if value not in seen:
-            output.append(value)
-            seen.add(value)
-    return output
+	output = []
+	seen = set()
+	for value in values:
+		if value not in seen:
+			output.append(value)
+			seen.add(value)
+	return output
+
+def write_outputs(new_dictionary, user_input_dictionary):
+	w = csv.writer(open("outputs/test_data.csv", "w"))
+	print ("\nwriting to test_data.csv...")
+	for key, val in new_dictionary.items():
+		w.writerow([key, val])
+
+	print ("writing to input.csv...")
+	w = csv.writer(open("outputs/input.csv", "w"))
+	for key, val in user_input_dictionary.items():
+		w.writerow([key, val])
 
 main()

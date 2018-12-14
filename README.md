@@ -15,3 +15,4 @@ In this project
 
   ### How to run:
   - run command `python smoothing.py` inside the folder
+  - outputs folder contains bigram counts for test and input data
