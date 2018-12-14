@@ -3,16 +3,15 @@
 In this project
 
 1. Laplace Bigram Smoothing
-2. Good Turing
+2. Good Turing N-Gram Smoothing
 
-  ### Requirements:
-   - Test Data Set
-      - To use your own data set, delete contents inside `test_data.txt` and replace with your own data.
-        Sample data is provided in `final.txt` file. 
+  ### How to use
 
-      - You may change the path value of `smoothing.py` line 12 if you wish to upload your own file.
-   - Python3 and above
+   - run command `python smoothing.py`
+   - input file name of your data set
+   - you can choose between the two smoothing techniques
+   - enter a phrase or sentence for probability computation
 
-  ### How to run:
-  - run command `python smoothing.py` inside the folder
-  - outputs folder contains bigram counts for test and input data
+  ### Requirements
+  
+   - Python ver. 3 and up
