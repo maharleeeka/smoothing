@@ -212,13 +212,13 @@ def remove_duplicates(values):
 	return output
 
 def write_outputs(new_dictionary, user_input_dictionary):
-	w = csv.writer(open("outputs/test_data_bigram.csv", "w"))
-	print ("\nwriting to test_data_bigram...")
+	w = csv.writer(open("outputs/test_data.csv", "w"))
+	print ("\nwriting to test_data.csv...")
 	for key, val in new_dictionary.items():
 		w.writerow([key, val])
 
-	print ("writing to input_bigram...")
-	w = csv.writer(open("outputs/input_bigram.csv", "w"))
+	print ("writing to input.csv...")
+	w = csv.writer(open("outputs/input.csv", "w"))
 	for key, val in user_input_dictionary.items():
 		w.writerow([key, val])
 
