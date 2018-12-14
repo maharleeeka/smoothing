@@ -11,7 +11,7 @@ In this project
         Sample data is provided in `final.txt` file. 
 
       - You may change the path value of `smoothing.py` line 12 if you wish to upload your own file.
-   - Python3
+   - Python3 and above
 
   ### How to run:
   - run command `python smoothing.py` inside the folder
