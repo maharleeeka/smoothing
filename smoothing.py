@@ -4,12 +4,7 @@ from collections import Counter, defaultdict
 from itertools import islice
 
 def main():
-	print ("1. laplace bigram smoothing")
-	print ("2. good turing n gram smoothing")
-
-	choice = input("\nChoose: ")
-
-	path = 'final.txt'
+	path = input("input file name: ")
 
 	test_data_file = open(path, 'r')
 	word_array = test_data_file.readlines();
@@ -18,16 +13,28 @@ def main():
 	new_dictionary = Counter(zip('', islice('', 1, None)))
 	word_frequency = Counter('');
 
-	print ("\nprocessing your test data input...")
+	print ("\nprocessing your test data input...\n")
 
+	word_count = 0
 	while i < len(word_array):
 		words = word_array[i]
 		words = words.lower()
+		word_count += len(words.split())
 		words = re.findall("\w+", words)
 		dictionary = Counter(zip(words, islice(words, 1, None)))
 		word_frequency = word_frequency + Counter(words)
 		new_dictionary = new_dictionary + dictionary
 		i = i+1;
+
+	print ("total number of words: ", word_count)
+	print ("total number of distinct words: ", len(word_frequency))
+	print ("\n")
+	print ("----------------------------")
+	print ("\n")
+	print ("1. laplace bigram smoothing")
+	print ("2. good turing n-gram smoothing")
+
+	choice = input("\nChoose: ")
 
 	user_input = input("\nenter phrase/sentence: ")
 	user_input = user_input.lower()
@@ -54,22 +61,17 @@ def laplace(new_dictionary, word_frequency, user_input, user_input_dictionary):
 		bigram_count = new_dictionary.get(key)
 		count = word_frequency.get(user_input[j])
 
-		if (count == None and k_value == 0):
-			probability = 0.0
-			break
-
-		if (bigram_count == None): 
-			bigram_count = 0 
-			bigram_count += float(k_value)
-		else:
-			bigram_count = bigram_count + float(k_value)
-		
 		if (count == None):
 			count = 0
 
 		if (k_value > 0):
-			prob_each = bigram_count / (count + len(new_dictionary))
+			if (bigram_count == None):
+				bigram_count = 0
+			bigram_count += k_value
+			prob_each = bigram_count / (count + len(word_frequency))
 		else:
+			if (bigram_count == None):
+				bigram_count = 0
 			prob_each = bigram_count / count
 
 		probability = probability * prob_each
@@ -139,9 +141,10 @@ def good_turing(new_dictionary, word_frequency, user_input_dictionary):
 		arr.append(arr_value)
 
 	estimates = []
+
 	i = 0
 	while i < len(arr):
-		estimate = p_star[arr[i]] / nc_array[arr[i]]
+		estimate = p_star[arr.index(arr[i])] / nc_array[arr.index(arr[i])]
 		estimates.append(estimate)
 		i += 1
 	
